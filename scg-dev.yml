@@ -9,11 +9,15 @@ spring:
           uri: lb://product
           predicates:
             - Path=/product/**
+          filters:
+          - StripPrefix=1  # /product 제거
                 
         - id: order
           uri: lb://order
           predicates:
             - Path=/order/**
+          filters:
+            - StripPrefix=1  # /order 제거
 
 eureka:
   client:
