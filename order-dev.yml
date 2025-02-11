@@ -1,0 +1,24 @@
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url.defaultZone: "http://manager1:manager1@localhost:8761/eureka"
+
+config:
+  db:
+    path: C:/Users/user/Desktop/workspace/filedb-msa/db/order
+    domain: order
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092  # Docker로 실행 중인 Kafka 브로커 주소
+    consumer:
+      group-id: order-service-group     # 컨슈머 그룹 ID
+      auto-offset-reset: earliest       # 처음부터 메시지 읽기
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"  # 모든 패키지에서 역직렬화 허용
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
