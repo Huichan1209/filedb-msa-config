@@ -11,14 +11,12 @@ config:
 
 spring:
   kafka:
-    bootstrap-servers: "localhost:29092"  # Docker로 실행 중인 Kafka 브로커 주소
+    bootstrap-servers: "localhost:29092"
     consumer:
-      group-id: order-service-group     # 컨슈머 그룹 ID
-      auto-offset-reset: earliest       # 처음부터 메시지 읽기
+      group-id: product-service
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer  # ErrorHandlingDeserializer 추가
       properties:
-        spring.json.trusted.packages: "*"  # 모든 패키지에서 역직렬화 허용
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        spring.json.trusted.packages: "*"
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer  # JsonDeserializer로 위임 처리
