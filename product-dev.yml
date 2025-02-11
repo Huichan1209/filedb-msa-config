@@ -16,7 +16,8 @@ spring:
       group-id: product-service
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer  # 역직렬화 오류 처리
       properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer  # 실제 역직렬화는 JsonDeserializer가 처리
         spring.json.trusted.packages: "*"  # 모든 패키지에서 역직렬화 허용
         spring.json.use.type.headers: false  # 수신 시 클래스 타입 정보를 무시하고 순수 JSON으로 역직렬화
