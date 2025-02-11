@@ -8,6 +8,8 @@ config:
   db:
     path: C:/Users/user/Desktop/workspace/filedb-msa/db/order
     domain: order
+  kafka:
+    port: 29092
 
 spring:
   kafka:
